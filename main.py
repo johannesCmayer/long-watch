@@ -5,6 +5,10 @@ import json
 import re
 from pathlib import Path
 
+#TODO Save the history of all updates in a file
+#TODO Allow to different kinds of input as dates (not just one hardcoded one, e.g. allow to specify seconds)
+#TODO Allow teh user to specify the save file location (possibly with config in same dir or in .config)
+
 SAVE_FILE = f"{Path.home()}/.config/tracker/tracker.json"
 
 @click.group()
