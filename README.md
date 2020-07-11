@@ -3,7 +3,9 @@ Track how much time has passed since certain dates on the command line.
 
 Complete help interface for all options and commands.
 
-The only requirement is click.
+Requirements: 
+  click
+  python >= 3.5
 
 Example output:
 ```
