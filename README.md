@@ -3,6 +3,8 @@ Track how much time has passed since certain dates on the command line.
 
 Complete help interface for all options and commands.
 
+The only requirement is click.
+
 Example output:
 ```
 NoFap:             4 days, 21:17:42
