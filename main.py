@@ -8,6 +8,7 @@ from pathlib import Path
 #TODO Fix time is not counting down if event is in the future
 #TODO Unhardcode goal display
 #TODO Save the history of all updates in a file
+#TODO Add a seperate commands for creating trackers and updating dates of trackers
 #TODO Allow to different kinds of input as dates (not just one hardcoded one, e.g. allow to specify seconds)
 #TODO Allow teh user to specify the save file location (possibly with config in same dir or in .config)
 
