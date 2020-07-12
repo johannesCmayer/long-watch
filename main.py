@@ -5,6 +5,8 @@ import json
 import re
 from pathlib import Path
 
+#TODO Fix time is not counting down if event is in the future
+#TODO Unhardcode goal display
 #TODO Save the history of all updates in a file
 #TODO Allow to different kinds of input as dates (not just one hardcoded one, e.g. allow to specify seconds)
 #TODO Allow teh user to specify the save file location (possibly with config in same dir or in .config)
@@ -54,14 +56,27 @@ def list(ctx):
         print_list = []
         for name, date in ctx.obj.items():
             time = (datetime.datetime.now() - datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M'))
-            time = re.sub(r'\.\d+$', '', str(time))
+            years = time.days // 365
+            days = abs(time.days) % 365
+            hours = time.seconds/60**2
+            minutes = abs(time.seconds/60) % 60
+            seconds = abs(time.seconds) % 60
             print_list.append([
-                f"{name}: ", 
-                f"{time}"
+                name, 
+                f"{years}y " if years != 0 else '', 
+                f"{days}d " if days != 0 else '', 
+                f"{hours:02.0f}:",
+                f"{minutes:02.0f}:",
+                f"{seconds:02}"
             ])
-        max_len = max([len(x) for x, _ in print_list])
-        for name, time in print_list:
-            print(name + " " * (max_len - len(name)) + time)
+        print("Current goal: Reach 90 days on all trackers.")
+        print()
+        for j, e in enumerate(print_list):
+            for i, arg in enumerate(e):
+                max_len = max([len(x[i]) for x in print_list])
+                postfix = ": " if i == 0 else ""
+                print(arg + postfix + " " * (max_len - len(arg)), end='')
+            print()
 
 def main():
     data_dir = os.path.dirname(SAVE_FILE)
