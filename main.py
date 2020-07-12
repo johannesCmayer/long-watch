@@ -57,13 +57,19 @@ def list(ctx):
         print_list = []
         for name, date in ctx.obj.items():
             time = (datetime.datetime.now() - datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M'))
-            years = time.days // 365
+            negative_days = time.days < 0
+
+            years = abs(round(time.days / 365))
             days = abs(time.days) % 365
-            hours = time.seconds/60**2
-            minutes = abs(time.seconds/60) % 60
-            seconds = abs(time.seconds) % 60
+            #TODO fix the countdown of time (it seems to be offset by an hour)
+            total_seconds = (60*60*24 - time.seconds) if negative_days else time.seconds
+            hours = total_seconds / 60**2
+            minutes = abs(total_seconds / 60) % 60
+            seconds = abs(total_seconds) % 60
+
             print_list.append([
-                name, 
+                name,
+                "- " if negative_days else "",
                 f"{years}y " if years != 0 else '', 
                 f"{days}d " if days != 0 else '', 
                 f"{hours:02.0f}:",
