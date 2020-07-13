@@ -6,10 +6,8 @@ import re
 from pathlib import Path
 import math
 
-#TODO Fix time is not counting down if event is in the future
 #TODO Unhardcode goal display
 #TODO Save the history of all updates in a file
-#TODO Add a seperate commands for creating trackers and updating dates of trackers
 #TODO Allow to different kinds of input as dates (not just one hardcoded one, e.g. allow to specify seconds)
 #TODO Allow teh user to specify the save file location (possibly with config in same dir or in .config)
 
@@ -24,7 +22,7 @@ def cli(ctx):
 @click.pass_context
 @click.option('-n', '--name', required=True, help="The name of the tracker")
 def remove(ctx, name):
-    """Delete trackers"""
+    """Delete tracker"""
     d_dict = ctx.obj
     del d_dict[name]
     with open(SAVE_FILE, 'w') as f:
@@ -35,14 +33,37 @@ def remove(ctx, name):
 @click.pass_context
 @click.option('-n', '--name', required=True, help="The name of the tracker")
 @click.option('-d', '--date', required=True, help="The start tracking date")
-def update(ctx, name, date):
-    """Update and create trackers"""
+def create(ctx, name, date):
+    """Create tracker"""
     regex = r'^\d\d\d\d-\d\d-\d\dT\d\d:\d\d$'
     if not re.search(regex, date):
         print(f"Invalid format. Use format: {regex}")
         exit(1)
 
     d_dict = ctx.obj
+    if name in d_dict:
+        print(f"Tracker {name} already exists.")
+        return
+    d_dict[name] = date
+    with open(SAVE_FILE, 'w') as f:
+        json.dump(d_dict, f, indent=4)
+    print(f"Creating tracker {name}")
+
+@cli.command()
+@click.pass_context
+@click.option('-n', '--name', required=True, help="The name of the tracker")
+@click.option('-d', '--date', required=True, help="The start tracking date")
+def update(ctx, name, date):
+    """Update tracker"""
+    regex = r'^\d\d\d\d-\d\d-\d\dT\d\d:\d\d$'
+    if not re.search(regex, date):
+        print(f"Invalid format. Use format: {regex}")
+        exit(1)
+
+    d_dict = ctx.obj
+    if name not in d_dict:
+        print(f"Tracker {name} does not exsist.")
+        return
     d_dict[name] = date
     with open(SAVE_FILE, 'w') as f:
         json.dump(d_dict, f, indent=4)
@@ -64,8 +85,8 @@ def list(ctx):
             days = abs(time.days) % 365
             #TODO fix the countdown of time (it seems to be offset by an hour)
             total_seconds = (60*60*24 - time.seconds) if negative_days else time.seconds
-            hours = total_seconds / 60**2
-            minutes = abs(total_seconds / 60) % 60
+            hours = total_seconds // 60**2
+            minutes = abs(total_seconds // 60) % 60
             seconds = abs(total_seconds) % 60
 
             print_list.append([
