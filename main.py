@@ -4,6 +4,7 @@ import os
 import json
 import re
 from pathlib import Path
+import math
 
 #TODO Fix time is not counting down if event is in the future
 #TODO Unhardcode goal display
@@ -59,7 +60,7 @@ def list(ctx):
             time = (datetime.datetime.now() - datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M'))
             negative_days = time.days < 0
 
-            years = abs(round(time.days / 365))
+            years = math.floor(abs(time.days / 365))
             days = abs(time.days) % 365
             #TODO fix the countdown of time (it seems to be offset by an hour)
             total_seconds = (60*60*24 - time.seconds) if negative_days else time.seconds
