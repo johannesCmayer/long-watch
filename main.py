@@ -6,9 +6,11 @@ import re
 from pathlib import Path
 import math
 
+#TODO Have tracker groups, that are visually seperated in the output and can be ordered
+#TODO allow to change the ordering of trackers
 #TODO Unhardcode goal display
 #TODO Save the history of all updates in a file
-#TODO Allow to different kinds of input as dates (not just one hardcoded one, e.g. allow to specify seconds)
+#TODO Allow to different kinds of input as dates (not just one hardcoded one, e.g. allow to specify seconds, and have a shortcut for now, and allow to add to now[possibly without having to specify the now e.g. +1d10:00:00])
 #TODO Allow teh user to specify the save file location (possibly with config in same dir or in .config)
 
 SAVE_FILE = f"{Path.home()}/.config/tracker/tracker.json"
