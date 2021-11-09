@@ -1,7 +1,7 @@
 # long-watch
-CLI program to track how much time has passed since events you specify.
+CLI program to track how much time has passed since the events you specify.
 
-One use can be to track how long you managed to not procrastinte. Example output:
+One use can be to track how long you managed to not procrastinate. Example output:
 ```
 NoFap:             51 days, 21:17:42
 Youtube:           09:12:42
