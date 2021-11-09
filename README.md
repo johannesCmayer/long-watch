@@ -1,10 +1,6 @@
 # long-watch
 CLI program to track how much time has passed since events you specify.
 
-Requirements: 
-- click
-- python >= 3.5
-
 One use can be to track how long you manaed to not procrastinte. Example output:
 ```
 NoFap:             51 days, 21:17:42
@@ -25,3 +21,7 @@ Commands:
   remove  Delete tracker
   update  Update tracker
 ```
+
+Requirements: 
+- click
+- python >= 3.5
