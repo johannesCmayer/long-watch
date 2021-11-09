@@ -5,12 +5,12 @@ Requirements:
 - click
 - python >= 3.5
 
-Example output:
+One use can be to track how long you manaed to not procrastinte. Example output:
 ```
-NoFap:             4 days, 21:17:42
-Gameing:           08:45:42
-Movies and Series: 10:47:42
+NoFap:             51 days, 21:17:42
 Youtube:           09:12:42
+Gameing:           40 days, 08:45:42
+Movies and Series: 12 days10:47:42
 ```
 Output of `long-watch --help`
 ```
