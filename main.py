@@ -71,15 +71,19 @@ def update(ctx, name, date):
         json.dump(d_dict, f, indent=4)
     print(f"Updating tracker {name}")
 
+#TODO fix if the event is more than a year away
 @cli.command()
 @click.pass_context
-def list(ctx):
+@click.option('-n', '--name', required=False, help="The name of the tracker")
+def list(ctx, name):
     """List active trackers"""
     if len(ctx.obj) == 0:
         print(f"{SAVE_FILE} contains no trackers.")
     else:
         print_list = []
-        for name, date in ctx.obj.items():
+        for item_name, date in ctx.obj.items():
+            if name != None and name != item_name:
+                continue
             time = (datetime.datetime.now() - datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M'))
             negative_days = time.days < 0
 
@@ -92,7 +96,7 @@ def list(ctx):
             seconds = abs(total_seconds) % 60
 
             print_list.append([
-                name,
+                item_name,
                 "- " if negative_days else "",
                 f"{years}y " if years != 0 else '', 
                 f"{days}d " if days != 0 else '', 
@@ -100,8 +104,6 @@ def list(ctx):
                 f"{minutes:02.0f}:",
                 f"{seconds:02}"
             ])
-        print("Current goal: Reach 90 days on all trackers.")
-        print()
         for j, e in enumerate(print_list):
             for i, arg in enumerate(e):
                 max_len = max([len(x[i]) for x in print_list])
