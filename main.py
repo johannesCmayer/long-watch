@@ -6,6 +6,8 @@ import re
 from pathlib import Path
 import math
 
+#TODO [#A] fix negative time for future event being off by one day minus
+
 #TODO Have tracker groups, that are visually seperated in the output and can be ordered
 #TODO allow to change the ordering of trackers
 #TODO Unhardcode goal display
@@ -88,7 +90,7 @@ def list(ctx, name):
             negative_days = time.days < 0
 
             years = math.floor(abs(time.days / 365))
-            days = abs(time.days) % 365
+            days = abs(time.days+1 if negative_days else time.days) % 365
             #TODO fix the countdown of time (it seems to be offset by an hour)
             total_seconds = (60*60*24 - time.seconds) if negative_days else time.seconds
             hours = total_seconds // 60**2
